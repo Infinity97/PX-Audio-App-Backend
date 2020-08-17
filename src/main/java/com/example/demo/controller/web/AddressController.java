@@ -21,37 +21,43 @@ import java.util.List;
 @RequestMapping(value = "/address")
 public class AddressController {
 
-    @Autowired
-    private IAddressService addressService;
+	@Autowired
+	private IAddressService addressService;
 
-    @Autowired
-    private AddressRepo addressRepo;
+	@Autowired
+	private AddressRepo addressRepo;
 
-    @Autowired
-    private ImageRepo imageRepo;
+	@Autowired
+	private ImageRepo imageRepo;
 
-    @Autowired
-    private UsersRepo usersRepo;
+	@Autowired
+	private UsersRepo usersRepo;
 
-    @PostMapping(value = "/add")
-    public ResponseEntity<ApiResponse<Address>> addAddress(@RequestBody AddressRequest addressRequest, @RequestParam(value = "userId", required = false) String userId) {
+	@PostMapping(value = "/add")
+	public ResponseEntity<ApiResponse<Address>> addAddress(@RequestBody AddressRequest addressRequest,
+	                                                       @RequestParam(value = "userId",
+			                                                       required = false) String userId) {
+		ApiResponse<Address> apiResponse = new ApiResponse<>();
+		try {
+			Address address = addressService.saveAddressToDB(addressRequest, null, userId);
+			log.info("INFO: The Address is {}", address);
+			apiResponse.setResponseObject(address);
+			apiResponse.setApiResponseStatus(ApiResponseStatus.SUCCESS);
+		} catch (Exception e) {
+			apiResponse = new ApiResponse<>(HttpStatus.OK, e);
+		}
+		return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+	}
 
-        ApiResponse<Address> apiResponse = new ApiResponse<>();
-        try {
-            Address address = addressService.saveAddressToDB(addressRequest, null, userId);
-            log.info("INFO: The Address is {}", address);
-            apiResponse.setResponseObject(address);
-            apiResponse.setApiResponseStatus(ApiResponseStatus.SUCCESS);
-        } catch (Exception e) {
-            apiResponse = new ApiResponse<>(HttpStatus.OK, e);
-        }
-        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
-    }
+	@GetMapping(value = "/all")
+	ResponseEntity<ApiResponse<List<Address>>> getAll(@RequestParam String userId) {
+		return new ResponseEntity<>(new ApiResponse<List<Address>>(ApiResponseStatus.SUCCESS, addressRepo.findAll()),
+				HttpStatus.OK);
+	}
 
-    @GetMapping(value = "/all")
-    ResponseEntity<ApiResponse<List<Address>>> getAll(@RequestParam String userId) {
+	// TODO: Find The Nearest Service Center Address. If Not Available then contact admin.
+    // TODO:
+	// TODO: getDistanceBetween2Addresses and Check if Home Delivery Possible.
 
-        return new ResponseEntity<>(new ApiResponse<List<Address>>(ApiResponseStatus.SUCCESS, addressRepo.findAll()), HttpStatus.OK);
-    }
 
 }

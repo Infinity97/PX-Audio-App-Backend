@@ -36,11 +36,11 @@ public class OrderDetail extends BaseEntity {
 	@Column(name = "shipping_cost")
 	private double shippingCost;
 
-	@Column(name = "weight")
-	private double weight;
+	@Column(name = "total_weight")
+	private double totalWeight;
 
-	@Column(name = "volume")
-	private double volume;
+	@Column(name = "total_volume")
+	private double totalVolume;
 
 	@Column(name = "total_list_price")
 	private double totalListPrice;

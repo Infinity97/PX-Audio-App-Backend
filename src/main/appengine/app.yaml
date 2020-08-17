@@ -1,2 +1,10 @@
 instance: F1
 runtime: java11
+resources:
+  cpu: 1
+  memory_gb: 2
+  disk_size_gb: 5
+  volumes:
+    - name: ramdisk1
+      volume_type: tmpfs
+      size_gb: 0.5

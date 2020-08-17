@@ -34,4 +34,13 @@ public class ApiPathConstants {
 	public static final String ADD_TO_CART = "/addToCart";
     public static final String REMOVE_FROM_CART = "/removeFromCart" ;
     public static final String DISPLAY_CART = "/displayCart" ;
+
+    public static final String ORDER_CONTROLLER = "/order";
+    public static final String CREATE_ORDER = "/createOrder";
+    public static final String CANCEL_ORDER = "/cancelOrder";
+    public static final String CHANGE_ORDER_DELIVERY_DATE = "/changeOrderDeliveryDate";
+    public static final String CHANGE_ORDER_DELIVERY_ADDRESS = "/changeOrderDeliveryAddress";
+
+    public static final String ORDER_DETAIL_CONTROLLER = "/orderDetail";
+    public static final String CREATE_ORDER_DETAIL = "/createOrderDetail";
 }
